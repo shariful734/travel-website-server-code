@@ -77,7 +77,7 @@ async function run() {
 }
 
 app.get('/', (req, res) => {
-    res.send('running Globe Plus server')
+    res.send('running Globe Plus server test server')
 });
 
 app.listen(port, () => {
