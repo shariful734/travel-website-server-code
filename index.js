@@ -25,6 +25,8 @@ async function run() {
         const database = client.db("GlobePlus");
         const countriesCollection = database.collection("countries");
 
+        const userDataCollection = database.collection("userdata")
+
         // Getting the API 
 
         app.get('/countries', async (req, res) => {
@@ -50,6 +52,23 @@ async function run() {
             const result = await countriesCollection.insertOne(country);
             console.log(result);
             res.json(result);
+        })
+
+        // user data post Api 
+
+        app.post('/userdata', async (req, res) => {
+            const userData = req.body;
+            console.log('hitting user data post');
+            const data = await userDataCollection.insertOne(userData);
+            res.json(data);
+        })
+
+        // getting user api 
+
+        app.get('/userdata', async (req, res) => {
+            const findUsers = userDataCollection.find({});
+            const users = await findUsers.toArray();
+            res.send(users);
         })
     }
     finally {
