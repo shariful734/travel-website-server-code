@@ -58,8 +58,9 @@ async function run() {
 
         app.post('/userdata', async (req, res) => {
             const userData = req.body;
+            console.log(userData);
             console.log('hitting user data post');
-            const data = await userDataCollection.insertOne(userData);
+            const data = await userDataCollection.insertOne(userData, country);
             res.json(data);
         })
 
@@ -69,6 +70,14 @@ async function run() {
             const findUsers = userDataCollection.find({});
             const users = await findUsers.toArray();
             res.send(users);
+        })
+
+        // get single user booking
+        app.get('/userdata/:bookingId', async (req, res) => {
+            const bookingId = req.params.id;
+            const queryTwo = { _id: ObjectId(bookingId) };
+            const specificBooking = await userDataCollection.findOne(queryTwo);
+            res.json(specificBooking);
         })
     }
     finally {
